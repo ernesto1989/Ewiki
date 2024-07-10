@@ -69,6 +69,27 @@ async function insertItem(req,res,insertQuery,params){
     }
 }
 
+async function insertItemsBatch(req,res,insertQuery,params,redirect){
+    try{
+        console.log("Insert");
+        
+        for(var i=0;i<params.length;i++){
+            var result = await db.insertItem(insertQuery,params[i]);
+        }
+        
+        if(result.status){
+            //Succeded!
+            console.log(result.rows.length);
+            res.status(303);
+            res.redirect(redirect)
+        }
+    }catch(error){
+        console.log(error.getErr());
+        res.status(500);
+        res.send(error);
+    }
+}
+
 async function updateItem(req,res,updateQuery,params){
     try{
         console.log("Update");
@@ -115,4 +136,4 @@ async function deleteItem(req,res,deleteQuery,params){
 }
   
 
-module.exports = {getData,getOne,insertItem,updateItem,deleteItem};
+module.exports = {getData,getOne,insertItem,insertItemsBatch,updateItem,deleteItem};
