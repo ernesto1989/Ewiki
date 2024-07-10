@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const templates = require('./templates')
+const templates = require('./Views/templates')
 const sectionsRestApi = require("./API/sectionsRest")
 const multer = require('multer');
 var fs = require('fs-extra')
@@ -18,6 +18,7 @@ router.get("/notes/api/section/id",sectionsRestApi.getOne);
 router.post("/notes/api/section",sectionsRestApi.insertItem);
 router.put("/notes/api/section",sectionsRestApi.updateItem);
 router.delete("/notes/api/section",sectionsRestApi.deleteItem);
+router.get("/notes/api/section/:loadFile",sectionsRestApi.manageFileUpload);
 
 
 
@@ -36,7 +37,7 @@ const str = multer.diskStorage({
 
 const upload = multer({ storage: str })
 
-router.post('/notes/api/:url/file-upload', upload.single('file'), (req,res) =>{
+router.post('/notes/api/file-upload/:url', upload.single('file'), (req,res) =>{
     try {
         console.log(req.params.url)
         console.log(req.file.filename)
@@ -46,8 +47,8 @@ router.post('/notes/api/:url/file-upload', upload.single('file'), (req,res) =>{
                 return console.error(err)
                 res.status(500).json({ error: error })
             }else{
-                console.log("success!")
-                res.status(200).json({ success: "file upload successful" })
+                console.log("success!");
+                res.redirect('/notes/api/' + req.params.url + '/'+req.file.filename);
             }
         })
     } catch (error) {

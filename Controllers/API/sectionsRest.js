@@ -61,4 +61,20 @@ async function deleteItem(req,res){
 }
   
 
-module.exports = {getData,getOne,insertItem,updateItem,deleteItem};
+async function manageFileUpload(req,res){
+    try{
+        console.log("Handle File: " + req.params.loadFile);
+        res.status(200);
+        res.json({
+            "status"  : "success",
+            "total_process_elements"   : 100        
+        })
+    }catch(error){
+        console.log(error.getErr());
+        res.status(500);
+        res.send(error);
+    }
+}
+  
+
+module.exports = {getData,getOne,insertItem,updateItem,deleteItem,manageFileUpload};
