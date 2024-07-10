@@ -8,7 +8,7 @@
  * July 8 2024
  */
 const sqlite3 = require('sqlite3').verbose();
-var dsPath = 'C:\\Users\\Ernesto Cantú\\Desktop\\EWiki\\Datasource\\Demo.db';
+var dsPath = 'C:/Conciencia/Projects/EWiki/Demo.db';
 
 /**
  * Class definition for query results.

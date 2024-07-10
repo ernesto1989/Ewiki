@@ -12,7 +12,7 @@
 
         function someFunction(option){
             if(option === '/sections'){
-                window.open(option,'targetWindow',
+                window.open('/notes'+option,'targetWindow',
                                    `toolbar=no,
                                     location=no,
                                     status=no,
@@ -21,6 +21,17 @@
                                     resizable=yes,
                                     width=1000
                                     height=1000`)
+            }
+            if(option === '/demoFU'){
+                window.open('/notes'+option,'targetWindow',
+                                   `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=200
+                                    height=200`)
             }
             else{
                 alert(option)

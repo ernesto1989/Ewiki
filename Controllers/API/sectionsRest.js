@@ -60,7 +60,8 @@ async function deleteItem(req,res){
     }
 }
   
-
+//https://stackoverflow.com/questions/33214717/why-post-redirects-to-get-and-put-redirects-to-put
+//this is why it is a GET!
 async function manageFileUpload(req,res){
     try{
         console.log("Handle File: " + req.params.loadFile);

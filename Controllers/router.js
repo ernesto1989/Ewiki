@@ -10,7 +10,8 @@ var fs = require('fs-extra')
 /*UI Pages */
 router.get('/', templates.index);
 router.get('/notes', templates.homePage);
-router.get('/sections', templates.sections);
+router.get('/notes/sections', templates.sections);
+router.get('/notes/demoFU', templates.demoFU);
 
 /* API SECTION */
 router.get("/notes/api/sections",sectionsRestApi.getData);

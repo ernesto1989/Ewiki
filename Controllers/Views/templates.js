@@ -5,6 +5,7 @@ async function index(req,res){
 async function homePage(req,res){
     var menu = [
         {name:'Sections Admin',url:'/sections'},
+        {name:'File Upload',url:'/demoFU'},
         {name:'Preferences',url:'/pref'}
     ]
 
@@ -15,4 +16,8 @@ async function sections(req,res){
     res.render('sections');
 }
 
-module.exports = {index,homePage,sections}
+async function demoFU(req,res){
+    res.render('test-upload');
+}
+
+module.exports = {index,homePage,sections,demoFU}
