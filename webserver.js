@@ -2,8 +2,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
-// creates router object with all available URLs
 const router = require("./Controllers/router");
 
 
@@ -16,7 +14,7 @@ function initWebProject(port){
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(express.static('public'));
- 
+     
     app.use(router);
 
     app.listen(port, () => {
