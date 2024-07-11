@@ -58,14 +58,14 @@ function createNewForm(isNewItem, selectedItem){
                 if(arr.length == 0){
                     var toSaveItem = this.record; 
                     if(toSaveItem.recid === 0){
-                        $.post('/notes/api/section', toSaveItem, function(respuesta){
+                        $.post('/notes/api/sectionMngr', toSaveItem, function(respuesta){
                             w2popup.close(); 
                             w2ui.myGrid.reload();
                         });
                     }else{
                         $.ajax({
                             type: 'PUT',
-                            url: '/notes/api/section',
+                            url: '/notes/api/sectionMngr',
                             data: toSaveItem,
                             async: false,
                             dataType: "json",
@@ -106,7 +106,7 @@ $("document").ready(()=>{
                     alert("Not implemented yet!");
             }
         },
-        url:"/notes/api/sections",
+        url:"/notes/api/sectionMngr",
         columns: [
             { field: 'name', text: 'Section Name', size: '15%' },
             { field: 'url', text: 'URL', size: '15%' },
@@ -130,7 +130,7 @@ $("document").ready(()=>{
                 if(answer === 'yes'){
                     $.ajax({
                         type: 'DELETE',
-                        url: '/notes/api/section',
+                        url: '/notes/api/sectionMngr',
                         data: element,
                         async: false,
                         dataType: "json",

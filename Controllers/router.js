@@ -1,4 +1,15 @@
-
+/**
+ * Router configuration file for the specific web application.
+ * 
+ * 1. Imports the corresponding express library and router.
+ * 2. Reads the templates handler file
+ * 3. Reads the api handler file
+ * 4. Defines a Generic Upload File Rest Service that redirects to a specific 
+ *    Upload handler
+ * 
+ * Ernesto Cantú
+ * 07/10/2024
+ */
 const express = require('express');
 const router = express.Router();
 const templates = require('./TemplateController/templates')
@@ -8,21 +19,25 @@ const multer = require('multer');
 var fs = require('fs-extra')
 
 
-/*UI Pages */
+/*TEMPLATES routes */
+
 router.get('/', templates.index);
 router.get('/notes', templates.homePage);
-router.get('/notes/sections', templates.sections);
+router.get('/notes/manager/sections', templates.sections);
+router.get('/notes/sections/:sv', templates.sectionsView);
 router.get('/notes/demoFU', templates.demoFU);
 
 
 /* API SECTION */
-router.get("/notes/api/sections",sectionsRestApi.getData);
-router.get("/notes/api/section/id",sectionsRestApi.getOne);
-router.post("/notes/api/section",sectionsRestApi.insertItem);
-router.put("/notes/api/section",sectionsRestApi.updateItem);
-router.delete("/notes/api/section",sectionsRestApi.deleteItem);
-router.get("/notes/api/section/:loadFile",sectionsRestApi.manageFileUpload);
+// NOTES
+router.get("/notes/api/sectionMngr",sectionsRestApi.getData);
+router.get("/notes/api/sectionMngr/id",sectionsRestApi.getOne);
+router.post("/notes/api/sectionMngr",sectionsRestApi.insertItem);
+router.put("/notes/api/sectionMngr",sectionsRestApi.updateItem);
+router.delete("/notes/api/sectionMngr",sectionsRestApi.deleteItem);
+router.get("/notes/api/sectionMngr/:loadFile",sectionsRestApi.manageFileUpload);
 
+//DEMO FILE UPLOAD or GENERIC REST API. PLEASE ERRASE!
 router.get("/notes/api/demoFU",fuRestApi.getData);
 router.get("/notes/api/demoFU/id",fuRestApi.getOne);
 router.post("/notes/api/demoFU",fuRestApi.insertItem);
@@ -32,8 +47,12 @@ router.get("/notes/api/demoFU/:loadFile",fuRestApi.manageFileUpload);
 
 
 
+/* Generic file upload service */
+
 /**
- * Generic file upload rest service
+ * The disk storage routine defines a fixed location to store the 
+ * received files on the server.
+ * 
  */
 const str = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -47,6 +66,19 @@ const str = multer.diskStorage({
 
 const upload = multer({ storage: str })
 
+/**
+ * GENERIC URL for posting files (Receives all types of files).
+ * 
+ * How it works:
+ * 
+ * 1. Receives the file from the client form.
+ * 2. Uses the Disk storage constant to generate a random name for the file.
+ * 3. After asigning a random name, it enters to the post method. Moves the hole file
+ *    to a defined location on the disk.
+ * 4. If everything works fine and the file is uploaded, it redirects to a GET endpoint
+ *    of a specific type (:url in the request path).
+ * 
+ */
 router.post('/notes/api/file-upload/:url', upload.single('file'), (req,res) =>{
     try {
         console.log(req.params.url)

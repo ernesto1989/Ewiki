@@ -1,6 +1,7 @@
 /**
- * Main project file
+ * Main project file and starting point.
  * 
+ * This file inits the server and its configuration
  * 
  * ECV's Wiki for:
  * 
@@ -15,5 +16,4 @@
  */
 
 const server = require("./webserver")
-
 server.initWebProject(3000);

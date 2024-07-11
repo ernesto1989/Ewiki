@@ -8,10 +8,17 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <style>
+        .card-container {
+            border:1px;
+            border-style: solid;
+            border-color:#ccc;
+            
+        }
+    </style>
     <script>
-
         function someFunction(option){
-            if(option === '/sections'){
+            if(option === '/manager/sections'){
                 window.open('/notes'+option,'targetWindow',
                                    `toolbar=no,
                                     location=no,
@@ -39,12 +46,25 @@
         $("document").ready(()=>{
             $.ajax({
                 type: 'GET',
-                url: '/notes/api/sections',
+                url: '/notes/api/sectionMngr',
                 async: false,
                 dataType: "json",
                 success: (data,state) => {
                     for(var i = 0;i<data.records.length;i++){
-                        var child = $('<li><a href="' + data.records[i].url + '">' + data.records[i].name + '</a></li>');
+
+                        var card = 
+                        `
+                        <div class="card-container col-md-6 col-lg-4 col-xl-4 mt-4"
+                            <div class="card">
+                                <h5 class="card-header text-bg-light">${data.records[i].name} </h5>
+                                <div class="card-body">
+                                    <p class="card-text">${data.records[i].description}</p>
+                                    <a href="/notes/sections${data.records[i].url}" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        var child = $(card);
                         $("#main_list").append(child)
                     }
                 }
@@ -55,22 +75,26 @@
     </script>
 </head>
 <body>
-    <h1>Welcome back to your personal Wiki <%= name %></h1>
-    <div class="div1">
-        <h2>TOP SECTION</h2>
-        <ol>
-            <% menu.forEach(m =>{ %>
-                <li><a href="javascript:someFunction('<%=m.url%>')"><%=m.name%></a></li>
-            <%});%>
-        </ol>
-    </div>
-    <hr>
-    <div class="div2">
-        <h2> Links to the disctinct sections </h2>
-        <div id="sections">
-            <ol id="main_list">
+    <div class="container">
+        <h1>Welcome back to your personal Wiki <%= name %></h1>
+        <div class="div1">
+            <h2>MANAGEMENT SECTION MENU</h2>
+            <ol>
+                <% menu.forEach(m =>{ %>
+                    <li><a href="javascript:someFunction('<%=m.url%>')"><%=m.name%></a></li>
+                <%});%>
             </ol>
         </div>
+        <hr>
+        <div class="div2">
+            <h2> Here you can find the available sections for your notes </h2>
+            <div class="container text-center" id="sections">
+                <div class="row no-gutters" id="main_list" >
+                    <!-- Here are the section cards -->
+                </div>
+            </div>
+        </div>
     </div>
+    
 </body>
 </html>
