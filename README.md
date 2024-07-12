@@ -4,7 +4,7 @@
 
 This project is currently under development.
 
-Starting date: July 7 2024
+Starting date: July 7 2024  
 Version: 0.9: July 12 2024 -> Just a few steps behind the first release
 
 
