@@ -23,11 +23,8 @@ First things first:
  3. Just for fuckin fun
 
  ### Tools
- 1. NodeJS runtime environment 
-   1.1 Express
-   1.2 Ejs template engine
- 2. JS Frontend tools:
-   2.1 W2UI 
- 3. Bootstrap
- 4. SQLite
+ 1. NodeJS runtime environment
+ 2. W"UI JS Frontend tools
+ 4. Bootstrap
+ 5. SQLite
 
