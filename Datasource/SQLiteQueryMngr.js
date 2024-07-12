@@ -8,7 +8,8 @@
  * July 8 2024
  */
 const sqlite3 = require('sqlite3').verbose();
-var dsPath = 'C:/Conciencia/Projects/EWiki/Demo.db';
+const constants = require("../constants");
+
 
 /**
  * Class definition for query results.
@@ -42,8 +43,7 @@ class QueryResult{
  */
 async function open() {
     try{
-        const db = new sqlite3.Database(dsPath);
-        console.log(`Connection opened for database ${dsPath}`);
+        const db = new sqlite3.Database(constants.dsPath);        
         return db;
     } catch(err){
         console.log("could not connect to database");

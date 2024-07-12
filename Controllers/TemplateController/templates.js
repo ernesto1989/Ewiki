@@ -11,7 +11,7 @@
  * 07/10/2024
  */
 
-const sectionService = require("../../Service/sectionsService")
+const service = require("../../Service/service")
 
 
 /**
@@ -30,14 +30,18 @@ async function index(req,res){
  * @param {Object} res Server Response
  */
 async function homePage(req,res){
-    var menu = [
+    const menu = [
         {name:'Sections Admin',url:'/manager/sections'},
-        {name:'File Upload',url:'/demoFU'},
-        {name:'Preferences',url:'/pref'}
+        {name:'File Upload (DEMO)',url:'/demoFU'},
     ]
 
-    const sections = await sectionService.getSections();
-    res.render('index', { name: 'Ernesto', menu: menu, sections: sections});
+    const session = [
+        {
+            username: 'Ernesto Cantu'
+        }
+    ]
+    const sections = await service.getSections();
+    res.render('index', { menu: menu, session, sections: sections});
 }
 
 /**
@@ -51,11 +55,21 @@ async function sections(req,res){
 
 async function sectionsView(req,res){
     try{
+        const menu = [
+            {name:'Sections Admin',url:'/manager/sections'},
+            {name:'File Upload (DEMO)',url:'/demoFU'},
+        ]
+    
+        const session = [
+            {
+                username: 'Ernesto Cantu'
+            }
+        ]
         const id = req.params.sectionId;
-        const qResult = await sectionService.getSectionByID(id);
-        const qResult2 = await sectionService.getSubsections(id)
+        const qResult = await service.getSectionByID(id);
+        const qResult2 = await service.getSubsections(id)
         var section = qResult[0];
-        res.render('section_view',{name:section.name,description:section.description,subsections:qResult2});
+        res.render('section_view',{menu:menu,session:session,name:section.name,description:section.description,subsections:qResult2});
     }catch(err){
         res.render('section_view',{name:'',description:'',subsections:[]});
     }
@@ -63,14 +77,40 @@ async function sectionsView(req,res){
 
 async function subsectionsView(req,res){
     try{
+
+        const menu = [
+            {name:'Sections Admin',url:'/manager/sections'},
+            {name:'File Upload (DEMO)',url:'/demoFU'},
+        ]
+    
+        const session = [
+            {
+                username: 'Ernesto Cantu'
+            }
+        ]
         const id = req.params.subsectionId;
-        const qResult = await sectionService.getSubsectionById(id);
-        const qResult2 = await sectionService.getTopics(id)
+        const qResult = await service.getSubsectionById(id);
+        const qResult2 = await service.getTopics(id)
         var subsection = qResult[0];
-        res.render('subsection_view',{name:subsection.name,description:subsection.description,topics:qResult2});
+        res.render('subsection_view',{menu:menu,session:session,name:subsection.name,description:subsection.description,topics:qResult2});
     }catch(err){
         res.render('subsection_view',{name:'',description:"",topics:[]});
     }
+}
+
+async function viewTopic(req,res){
+    const menu = [
+        {name:'Sections Admin',url:'/manager/sections'},
+        {name:'File Upload (DEMO)',url:'/demoFU'},
+    ]
+
+    const session = [
+        {
+            username: 'Ernesto Cantu'
+        }
+    ]
+    const id = req.params.topicId;
+    res.render('topic',{topicId:id,menu:menu,session:session,name:id})
 }
 
 /**
@@ -82,4 +122,4 @@ async function demoFU(req,res){
     res.render('test-upload');
 }
 
-module.exports = {index,homePage,sections,sectionsView,subsectionsView,demoFU}
+module.exports = {index,homePage,sections,sectionsView,subsectionsView,viewTopic,demoFU}

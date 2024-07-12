@@ -1,9 +1,10 @@
-const db = require('../Datasource/SQLiteQueryMngr')
+const db = require('../Datasource/SQLiteQueryMngr');
+const constants = require("../constants");
 
 
 async function getSections(){
     try{
-        var query = 'SELECT id,name,description FROM sections';
+        var query = constants.allSectionsQuery;
         qResult = await db.getData(query);
         return qResult.rows; //will only exec if await promise resolve
     }catch(err){
@@ -13,7 +14,7 @@ async function getSections(){
 
 async function getSectionByID(id){
     try{
-        var query = 'SELECT * FROM sections WHERE id = ?';
+        var query = constants.sectionByIdQuery;
         var params =[id];
         qResult = await db.getDataWithParams(query,params);
         return qResult.rows;   
@@ -26,7 +27,7 @@ async function getSectionByID(id){
 async function getSubsections(sectionId){
 
     try{
-        const query = 'SELECT * FROM subsections WHERE section_id = ?';
+        const query = constants.allSubsectionsQuery;
         const params =[sectionId];
         qResult = await db.getDataWithParams(query,params);
         return qResult.rows;
@@ -37,7 +38,7 @@ async function getSubsections(sectionId){
 
 async function getSubsectionById(subsectionId){
     try{
-        const query = 'SELECT * FROM subsections WHERE id = ?';
+        const query = constants.subsectionByIdQuery;
         const params =[subsectionId];
         qResult = await db.getDataWithParams(query,params);
         return qResult.rows;
@@ -48,7 +49,7 @@ async function getSubsectionById(subsectionId){
 
 async function getTopics(subsectionId){
     try{
-        const query = 'SELECT * FROM topics WHERE subsection_id = ?';
+        const query = constants.allTopicsQuery;
         const params =[subsectionId];
         qResult = await db.getDataWithParams(query,params);
         return qResult.rows;

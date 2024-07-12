@@ -17,15 +17,17 @@ const sectionsRestApi = require("./API/sectionsRest")
 const fuRestApi = require("./API/fuRest")
 const multer = require('multer');
 var fs = require('fs-extra')
+const constants = require("../constants")
 
 
 /*TEMPLATES routes */
 
-router.get('/', templates.index);
-router.get('/notes', templates.homePage);
+router.get(constants.indexURL, templates.index);
+router.get(constants.contextURL, templates.homePage);
 router.get('/notes/manager/sections', templates.sections);
-router.get('/notes/sections/:sectionId', templates.sectionsView);
-router.get('/notes/subsections/:subsectionId', templates.subsectionsView);
+router.get(constants.contextURL + constants.sectionsURL, templates.sectionsView);
+router.get(constants.contextURL + constants.subsectionsURL, templates.subsectionsView);
+router.get(constants.contextURL + constants.topicsURL, templates.viewTopic);
 router.get('/notes/demoFU', templates.demoFU);
 
 
