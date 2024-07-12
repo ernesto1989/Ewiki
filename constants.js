@@ -14,6 +14,8 @@ const allTopicsQuery = 'SELECT * FROM topics WHERE subsection_id = ?';
 
 const indexURL = '/';
 const contextURL = '/notes';
+const loginURL = '/login';
+const logoutURL = '/logout';
 const sectionsURL = '/sections/:sectionId';
 const subsectionsURL = '/subsections/:subsectionId';
 const topicsURL = '/topic/:topicId';
@@ -26,6 +28,8 @@ module.exports= {
     subsectionByIdQuery,
     allTopicsQuery,
     indexURL,
+    loginURL,
+    logoutURL,
     contextURL,
     sectionsURL,
     subsectionsURL,

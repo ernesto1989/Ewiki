@@ -23,11 +23,16 @@ const constants = require("../constants")
 /*TEMPLATES routes */
 
 router.get(constants.indexURL, templates.index);
+
+router.get(constants.contextURL + constants.loginURL, templates.login);
+router.post(constants.contextURL + constants.loginURL, templates.handleLogin);
+router.get(constants.contextURL + constants.logoutURL, templates.handleLogOut);
+
 router.get(constants.contextURL, templates.homePage);
-router.get('/notes/manager/sections', templates.sections);
 router.get(constants.contextURL + constants.sectionsURL, templates.sectionsView);
 router.get(constants.contextURL + constants.subsectionsURL, templates.subsectionsView);
 router.get(constants.contextURL + constants.topicsURL, templates.viewTopic);
+router.get('/notes/manager/sections', templates.sections);
 router.get('/notes/demoFU', templates.demoFU);
 
 
