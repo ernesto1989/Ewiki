@@ -11,6 +11,8 @@
  * 07/10/2024
  */
 
+const sectionService = require("../../Service/sectionsService")
+
 
 /**
  * Index handler. It redirects to the main route of the project.
@@ -34,6 +36,7 @@ async function homePage(req,res){
         {name:'Preferences',url:'/pref'}
     ]
 
+    const sections = await sectionService.getSections();
     res.render('index', { name: 'Ernesto', menu: menu, sections: sections});
 }
 
@@ -47,8 +50,27 @@ async function sections(req,res){
 }
 
 async function sectionsView(req,res){
-    console.log(req.params.sv);
-    res.render('section_view',{section:req.params.sv});
+    try{
+        const id = req.params.sectionId;
+        const qResult = await sectionService.getSectionByID(id);
+        const qResult2 = await sectionService.getSubsections(id)
+        var section = qResult[0];
+        res.render('section_view',{name:section.name,description:section.description,subsections:qResult2});
+    }catch(err){
+        res.render('section_view',{name:'',description:'',subsections:[]});
+    }
+}
+
+async function subsectionsView(req,res){
+    try{
+        const id = req.params.subsectionId;
+        const qResult = await sectionService.getSubsectionById(id);
+        const qResult2 = await sectionService.getTopics(id)
+        var subsection = qResult[0];
+        res.render('subsection_view',{name:subsection.name,description:subsection.description,topics:qResult2});
+    }catch(err){
+        res.render('subsection_view',{name:'',description:"",topics:[]});
+    }
 }
 
 /**
@@ -60,4 +82,4 @@ async function demoFU(req,res){
     res.render('test-upload');
 }
 
-module.exports = {index,homePage,sections,sectionsView,demoFU}
+module.exports = {index,homePage,sections,sectionsView,subsectionsView,demoFU}

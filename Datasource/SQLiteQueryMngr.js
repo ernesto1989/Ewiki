@@ -41,14 +41,15 @@ class QueryResult{
  * @returns an SQLite connection
  */
 async function open() {
-    let db = new sqlite3.Database(dsPath, (err) => {
-        if (err) {
-            console.error(err.message);        
-        } else {
-            console.log(`Connection opened for database ${dsPath}`);
-        }
-    });
-    return db;
+    try{
+        const db = new sqlite3.Database(dsPath);
+        console.log(`Connection opened for database ${dsPath}`);
+        return db;
+    } catch(err){
+        console.log("could not connect to database");
+        return null;
+    }
+    
 }
 
 /**
@@ -61,24 +62,19 @@ async function getData(query){
     try{
         console.log("GetData");
         const conn = await open();
-        p = new Promise(function (resolve, reject) {
-            var result;
-
-            conn.all(query, function(err, rows) {
+        return new Promise(function(resolve,reject){
+            conn.all(query,function(err,rows){
                 conn.close();
-                if (err) {
-                    console.error(err.message);
-                    result = new QueryResult(false,{},0,0,err.message);
-                    reject(result);
-                } else {
-                    result = new QueryResult(true,rows,0,0,'');                
-                    resolve(result);
-                }      
+                if(err){
+                    reject(err.message);
+                }else{
+                    resolve(new QueryResult(true,rows,0,0,''));
+                }
             });
         });
-        return p;
     }catch(error){
       console.log(error);
+      
     }
 }
 
@@ -94,21 +90,17 @@ async function getDataWithParams(query,params){
     try{
         console.log("GetData");
         const conn = await open();
-        p = new Promise(function (resolve, reject) {
-            var result;
+        return new Promise(function (resolve, reject) {
             conn.all(query,params, function(err, rows) {
                 conn.close();
                 if (err) {
                     console.error(err.message);
-                    result = new QueryResult(false,{},0,0,err.message);
-                    reject(result);
+                    reject(err.message);
                 } else {
-                    result = new QueryResult(true,rows,0,0,'');                
-                    resolve(result);
+                    resolve(new QueryResult(true,rows,0,0,''));
                 }    
             });
         });
-        return p;
     }catch(error){
       console.log(error);
     }
@@ -125,21 +117,18 @@ async function insertItem(query,params){
     try{
         console.log("Insert");
         const conn = await open();
-        p = new Promise(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             var result;
             conn.run(query,params, function(err) {
                 conn.close();
                 if (err) {
                     console.error(err.message);
-                    result = new QueryResult(false,{},0,0,err.message);
-                    reject(result);
+                    reject(err.message);
                 } else {
-                    result = new QueryResult(true,{},this.lastID,0,'');                
-                    resolve(result);
+                    resolve(new QueryResult(true,{},this.lastID,0,''));
                 }    
             });
         });
-        return p;
     }catch(error){
       console.log(error);
     }
@@ -156,21 +145,17 @@ async function updateItem(query,params){
     try{
         console.log("Update");
         const conn = await open();
-        p = new Promise(function (resolve, reject) {
-            var result;
+        return new Promise(function (resolve, reject) {
             conn.run(query,params, function(err) {
                 conn.close();
                 if (err) {
                     console.error(err.message);
-                    result = new QueryResult(false,{},0,0,err.message);
-                    reject(result);
+                    reject(err.message);
                 } else {
-                    result = new QueryResult(true,{},0,this.changes,'');                
-                    resolve(result);
+                    resolve(new QueryResult(true,{},0,this.changes,''));
                 }    
             });
         });
-        return p;
     }catch(error){
       console.log(error);
     }

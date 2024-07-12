@@ -44,32 +44,7 @@
         }
 
         $("document").ready(()=>{
-            $.ajax({
-                type: 'GET',
-                url: '/notes/api/sectionMngr',
-                async: false,
-                dataType: "json",
-                success: (data,state) => {
-                    for(var i = 0;i<data.records.length;i++){
-
-                        var card = 
-                        `
-                        <div class="card-container col-md-6 col-lg-4 col-xl-4 mt-4"
-                            <div class="card">
-                                <h5 class="card-header text-bg-light">${data.records[i].name} </h5>
-                                <div class="card-body">
-                                    <p class="card-text">${data.records[i].description}</p>
-                                    <a href="/notes/sections${data.records[i].url}" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-                        var child = $(card);
-                        $("#main_list").append(child)
-                    }
-                }
-                
-            }); 
+           console.log("doc is ready")
         });
         
     </script>
@@ -90,7 +65,17 @@
             <h2> Here you can find the available sections for your notes </h2>
             <div class="container text-center" id="sections">
                 <div class="row no-gutters" id="main_list" >
-                    <!-- Here are the section cards -->
+                    <% for(let i = 0; i < sections.length;i++){ %>
+                        <div class="card-container col-md-6 col-lg-4 col-xl-4 mt-4">
+                            <div class="card">
+                                <h5 class="card-header text-bg-light"><%= sections[i].name %></h5>
+                                <div class="card-body">
+                                    <p class="card-text"><%= sections[i].description %></p>
+                                    <a href="/notes/sections/<%= sections[i].id %>"  class="btn btn-primary">View  More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    <%}%>
                 </div>
             </div>
         </div>

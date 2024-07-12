@@ -24,7 +24,8 @@ var fs = require('fs-extra')
 router.get('/', templates.index);
 router.get('/notes', templates.homePage);
 router.get('/notes/manager/sections', templates.sections);
-router.get('/notes/sections/:sv', templates.sectionsView);
+router.get('/notes/sections/:sectionId', templates.sectionsView);
+router.get('/notes/subsections/:subsectionId', templates.subsectionsView);
 router.get('/notes/demoFU', templates.demoFU);
 
 

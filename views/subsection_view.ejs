@@ -11,22 +11,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>SECTION: <%=name %></h1>
+        <h1>SUBSECTION: <%=name %></h1>
         <div class="div2">
             <h2> <%=description%> </h2>
             <div class="container text-center" id="sections">
                 <div class="row no-gutters" id="main_list" >
-                    <% if(subsections.length === 0) { %>
+                    <% if(topics.length === 0) { %>
                         <h2>Nothing here yet.</h2>
-                        <h5>Fell free to add new subsections <a href="#">here</a></h5>
+                        <h5>Fell free to add new topic <a href="#">here</a></h5>
                     <% }%>
-                    <% for(let i = 0; i < subsections.length;i++){ %>
+                    <% for(let i = 0; i < topics.length;i++){ %>
                         <div class="card-container col-md-6 col-lg-4 col-xl-4 mt-4">
                             <div class="card">
-                                <h5 class="card-header text-bg-light"><%= subsections[i].name %></h5>
+                                <h5 class="card-header text-bg-light"><%= topics[i].name %></h5>
                                 <div class="card-body">
-                                    <p class="card-text"><%= subsections[i].description %></p>
-                                    <a href="/notes/subsections/<%= subsections[i].id %>"  class="btn btn-primary">View  More...</a>
+                                    <a href="/notes/topics/<%= topics[i].id %>"  class="btn btn-primary">VRead about this</a>
                                 </div>
                             </div>
                         </div>

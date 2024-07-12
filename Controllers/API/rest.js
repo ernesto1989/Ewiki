@@ -5,21 +5,15 @@ const db = require('../../Datasource/SQLiteQueryMngr')
 
 async function getData(req,res,getAllQuery){
     try{
-        var result = await db.getData(getAllQuery);
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.status(200);
-            res.json({
-                "status"  : "success",
-                "total"   : result.getRows().length,
-                "records" : result.getRows()        
-            });
-        }else{
-            throw Exception;
-        }
+        const result = await db.getData(getAllQuery);
+        res.status(200);
+        res.json({
+            "status"  : "success",
+            "total"   : result.getRows().length,
+            "records" : result.getRows()        
+        });
     }catch(error){
-        console.log(error.getErr());
+        console.log(error);
         res.status(500);
         res.send(error);
     }
@@ -27,18 +21,14 @@ async function getData(req,res,getAllQuery){
 
 async function getOne(req,res,searchBYIdQuery,params){
     try{
-        console.log("GetOne");
-        var result = await db.getDataWithParams(searchBYIdQuery,params);
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.status(200);
-            res.json({
-                "status"  : "success",
-                "total"   : result.getRows().length,
-                "records" : result.getRows()  
-            });
-        }
+        const result = await db.getDataWithParams(searchBYIdQuery,params);
+        res.status(200);
+        res.json({
+            "status"  : "success",
+            "total"   : result.getRows().length,
+            "records" : result.getRows()  
+        });
+        
     }catch(error){
         console.log(error.getErr());
         res.status(500);
@@ -48,20 +38,14 @@ async function getOne(req,res,searchBYIdQuery,params){
 
 async function insertItem(req,res,insertQuery,params){
     try{
-        console.log("Insert");
-        
-        var result = await db.insertItem(insertQuery,params);
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.status(200);
-            res.json({
-                "status"  : "success",
-                "total"   : 0,
-                "records" : {},
-                "inserted_id": result.getGenId()
-            });
-        }
+        const result = await db.insertItem(insertQuery,params);
+        res.status(200);
+        res.json({
+            "status"  : "success",
+            "total"   : 0,
+            "records" : {},
+            "inserted_id": result.getGenId()
+        });
     }catch(error){
         console.log(error.getErr());
         res.status(500);
@@ -71,18 +55,13 @@ async function insertItem(req,res,insertQuery,params){
 
 async function insertItemsBatch(req,res,insertQuery,params,redirect){
     try{
-        console.log("Insert");
-        
         for(var i=0;i<params.length;i++){
             var result = await db.insertItem(insertQuery,params[i]);
         }
         
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.status(303);
-            res.redirect(redirect)
-        }
+        res.status(303);
+        res.redirect(redirect)
+        
     }catch(error){
         console.log(error.getErr());
         res.status(500);
@@ -92,19 +71,15 @@ async function insertItemsBatch(req,res,insertQuery,params,redirect){
 
 async function updateItem(req,res,updateQuery,params){
     try{
-        console.log("Update");
-        var result = await db.updateItem(updateQuery,params);
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.json({
-                "status"  : "success",
-                "total"   : 0,
-                "records" : {},
-                "affected_rows": result.getChanges()
-            });
-            res.status(200);
-        }
+        const result = await db.updateItem(updateQuery,params);
+        res.json({
+            "status"  : "success",
+            "total"   : 0,
+            "records" : {},
+            "affected_rows": result.getChanges()
+        });
+        res.status(200);
+        
     }catch(error){
         console.log(error.getErr());
         res.status(500);
@@ -115,19 +90,14 @@ async function updateItem(req,res,updateQuery,params){
 
 async function deleteItem(req,res,deleteQuery,params){
     try{
-        console.log("Delete");
         var result = await db.updateItem(deleteQuery,params);
-        if(result.status){
-            //Succeded!
-            console.log(result.rows.length);
-            res.status(200);
-            res.json({
-                "status"  : "success",
-                "total"   : 0,
-                "records" : {},
-                "affected_rows": result.getChanges()
-            });
-        }
+        res.status(200);
+        res.json({
+            "status"  : "success",
+            "total"   : 0,
+            "records" : {},
+            "affected_rows": result.getChanges()
+        });
     }catch(error){
         console.log(error.getErr());
         res.status(500);
