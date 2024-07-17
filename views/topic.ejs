@@ -5,12 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOPIC</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <%- include('imports.ejs') %>
+    <script>
+        $("document").ready(()=>{
+            var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
+            simplemde.value("fuckoff motherfucker");
+        });
+        
+    </script>
 </head>
 <body>
     <div class="container-fluid">
         <%- include('nav.ejs') %>
         <h1>HERE IS EVERITHING ABOUT THIS TOPIC with ID: <%= topicId%></h1>
+        <div class="container" id="md-container">
+            <textarea id="MyId">
+                HERE
+            </textarea>
+        </div>
     </div>
     
 </body>
