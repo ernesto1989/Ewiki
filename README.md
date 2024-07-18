@@ -24,7 +24,7 @@ First things first:
 
  ### Tools
  1. NodeJS runtime environment
- 2. W"UI JS Frontend tools
+ 2. W2UI JS Frontend tools
  4. Bootstrap
  5. SQLite
 
