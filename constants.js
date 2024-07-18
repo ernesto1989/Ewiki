@@ -9,6 +9,7 @@ const allSubsectionsQuery = 'SELECT * FROM subsections WHERE section_id = ?';
 const subsectionByIdQuery = 'SELECT * FROM subsections WHERE id = ?';
 const allTopicsQuery = 'SELECT * FROM topics WHERE subsection_id = ?';
 const topicContentQuery = 'SELECT * FROM content WHERE topic_id = ?';
+const userQuery = 'SELECT * FROM users WHERE username = ? and password = ?';
 
 
 //URLS 
@@ -29,6 +30,7 @@ module.exports= {
     subsectionByIdQuery,
     allTopicsQuery,
     topicContentQuery,
+    userQuery,
     indexURL,
     loginURL,
     logoutURL,

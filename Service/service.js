@@ -70,5 +70,17 @@ async function getTopicContent(topicId){
     }
 }
 
+async function searchUser(username,password){
+    try{
+        const query = constants.userQuery;
+        const params =[username,password];
+        qResult = await db.getDataWithParams(query,params);
+        const user = qResult.rows[0]
+        return user;
+    }catch(err){
+        return [];
+    }
+}
 
-module.exports = {getSections,getSectionByID,getSubsections,getSubsectionById,getTopics,getTopicContent}
+
+module.exports = {getSections,getSectionByID,getSubsections,getSubsectionById,getTopics,getTopicContent,searchUser}

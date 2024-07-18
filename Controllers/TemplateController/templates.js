@@ -32,10 +32,12 @@ async function login(req,res){
 async function handleLogin(req,res){
     const { username, password } = req.body;
 
-    if(username === 'ecv@tec.mx' && password === '1234'){
+    const result = await service.searchUser(username,password);
+
+    if(result){
         req.session.isLoggedIn = true;
         req.session.username = username;
-
+        req.session.name = result.name;
         res.redirect('/notes');
     }else{
         res.render('login',{error:'1',message:'WORNG PASSWORD, TRY AGAIN'});
@@ -63,7 +65,7 @@ async function handleLogOut(req,res){
 async function homePage(req,res){
     const isLoggedIn = req.session.isLoggedIn;
     const usuario = req.session.username;
-    
+    const nombre = req.session.name;
     if(isLoggedIn){
         const menu = [
             {name:'Sections Admin',url:'/manager/sections'},
@@ -72,7 +74,8 @@ async function homePage(req,res){
     
         const session = [
             {
-                username: usuario
+                username: usuario,
+                name: nombre
             }
         ]
         const sections = await service.getSections();
@@ -96,6 +99,8 @@ async function sections(req,res){
 async function sectionsView(req,res){
     const isLoggedIn = req.session.isLoggedIn;
     const usuario = req.session.username;
+    const nombre = req.session.name;
+
     if(isLoggedIn){
         try{
             const menu = [
@@ -105,7 +110,8 @@ async function sectionsView(req,res){
         
             const session = [
                 {
-                    username: usuario
+                    username: usuario,
+                    name: nombre
                 }
             ]
             const id = req.params.sectionId;
@@ -124,6 +130,8 @@ async function sectionsView(req,res){
 async function subsectionsView(req,res){
     const isLoggedIn = req.session.isLoggedIn;
     const usuario = req.session.username;
+    const nombre = req.session.name;
+
     if(isLoggedIn){
         try{
 
@@ -134,7 +142,8 @@ async function subsectionsView(req,res){
         
             const session = [
                 {
-                    username: usuario
+                    username: usuario,
+                    name: nombre
                 }
             ]
             const id = req.params.subsectionId;
@@ -153,6 +162,8 @@ async function subsectionsView(req,res){
 async function viewTopic(req,res){
     const isLoggedIn = req.session.isLoggedIn;
     const usuario = req.session.username;
+    const nombre = req.session.name;
+
     if(isLoggedIn){
         const menu = [
             {name:'Sections Admin',url:'/manager/sections'},
@@ -161,7 +172,8 @@ async function viewTopic(req,res){
 
         const session = [
             {
-                username: usuario
+                username: usuario,
+                name: nombre
             }
         ]
         const id = req.params.topicId;
@@ -177,6 +189,8 @@ async function viewTopic(req,res){
 async function editTopic(req,res){
     const isLoggedIn = req.session.isLoggedIn;
     const usuario = req.session.username;
+    const nombre = req.session.name;
+
     if(isLoggedIn){
         const menu = [
             {name:'Sections Admin',url:'/manager/sections'},
@@ -185,7 +199,8 @@ async function editTopic(req,res){
 
         const session = [
             {
-                username: usuario
+                username: usuario,
+                name: nombre
             }
         ]
         const id = req.params.topicId;
