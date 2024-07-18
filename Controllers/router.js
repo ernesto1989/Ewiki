@@ -32,6 +32,7 @@ router.get(constants.contextURL, templates.homePage);
 router.get(constants.contextURL + constants.sectionsURL, templates.sectionsView);
 router.get(constants.contextURL + constants.subsectionsURL, templates.subsectionsView);
 router.get(constants.contextURL + constants.topicsURL, templates.viewTopic);
+router.get(constants.contextURL + constants.topicsURL + '/edit', templates.editTopic);
 router.get('/notes/manager/sections', templates.sections);
 router.get('/notes/demoFU', templates.demoFU);
 

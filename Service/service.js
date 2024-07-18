@@ -59,4 +59,16 @@ async function getTopics(subsectionId){
 }
 
 
-module.exports = {getSections,getSectionByID,getSubsections,getSubsectionById,getTopics}
+async function getTopicContent(topicId){
+    try{
+        const query = constants.topicContentQuery;
+        const params =[topicId];
+        qResult = await db.getDataWithParams(query,params);
+        return qResult.rows;
+    }catch(err){
+        return [];
+    }
+}
+
+
+module.exports = {getSections,getSectionByID,getSubsections,getSubsectionById,getTopics,getTopicContent}

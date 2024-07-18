@@ -105,7 +105,7 @@ async function sectionsView(req,res){
         
             const session = [
                 {
-                    username: 'Ernesto Cantu'
+                    username: usuario
                 }
             ]
             const id = req.params.sectionId;
@@ -134,7 +134,7 @@ async function subsectionsView(req,res){
         
             const session = [
                 {
-                    username: 'Ernesto Cantu'
+                    username: usuario
                 }
             ]
             const id = req.params.subsectionId;
@@ -161,15 +161,43 @@ async function viewTopic(req,res){
 
         const session = [
             {
-                username: 'Ernesto Cantu'
+                username: usuario
             }
         ]
         const id = req.params.topicId;
-        res.render('topic',{topicId:id,menu:menu,session:session,name:id})
+        const qResult = await service.getTopicContent(id);
+        let c = qResult[0]
+        //const content = c.content.replaceAll('<br>','\n')
+        res.render('topic',{topicId:id,menu:menu,session:session,name:id,content:c.content})
     }else{
         res.render('login',{error:'1',message:'NEED TO SIGN IN'});
     }
 }
+
+async function editTopic(req,res){
+    const isLoggedIn = req.session.isLoggedIn;
+    const usuario = req.session.username;
+    if(isLoggedIn){
+        const menu = [
+            {name:'Sections Admin',url:'/manager/sections'},
+            {name:'File Upload (DEMO)',url:'/demoFU'},
+        ]
+
+        const session = [
+            {
+                username: usuario
+            }
+        ]
+        const id = req.params.topicId;
+        const qResult = await service.getTopicContent(id);
+        let c = qResult[0]
+        //const content = c.content.replaceAll('<br>','\n')
+        res.render('topic_edit',{topicId:id,menu:menu,session:session,name:id,content:c.content})
+    }else{
+        res.render('login',{error:'1',message:'NEED TO SIGN IN'});
+    }
+}
+
 
 /**
  * Demo File Upload UI Handler
@@ -180,4 +208,4 @@ async function demoFU(req,res){
     res.render('test-upload');
 }
 
-module.exports = {index,login,handleLogin,handleLogOut,homePage,sections,sectionsView,subsectionsView,viewTopic,demoFU}
+module.exports = {index,login,handleLogin,handleLogOut,homePage,sections,sectionsView,subsectionsView,viewTopic,editTopic,demoFU}

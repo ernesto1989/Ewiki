@@ -9,18 +9,52 @@
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <%- include('imports.ejs') %>
     <script>
+        var simplemde;
+
         $("document").ready(()=>{
-            var simplemde = new SimpleMDE({ element: $("#MyID")[0] });
-            simplemde.value("fuckoff motherfucker");
+            simplemde =new SimpleMDE({
+                element: $("#MyID")[0],
+                toolbar: false,
+                initialValue: "<%=content%>"
+            });
+            simplemde.togglePreview();
+            
         });
+
+        // actiate preview mode
+        
         
     </script>
+    <style>
+
+        .markdown-preview > .CodeMirror,
+        .markdown-preview > .CodeMirror > .editor-preview {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .markdown-preview > .CodeMirror > .editor-preview {
+            display: contents;
+        }
+
+        .markdown-preview > .CodeMirror > .CodeMirror-scroll {
+            display: none;
+        }
+
+        .markdown-preview > .editor-toolbar {
+            display: none !important;
+        }
+        .markdown-preview > .editor-statusbar {
+            display: none !important;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container-fluid">
         <%- include('nav.ejs') %>
-        <h1>HERE IS EVERITHING ABOUT THIS TOPIC with ID: <%= topicId%></h1>
-        <div class="container" id="md-container">
+        
+        <div class="container-fluid" id="md-container">
             <textarea id="MyId">
                 HERE
             </textarea>
